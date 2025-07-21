@@ -49,7 +49,6 @@ export default class onBoard extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        <View></View>
       </View>
     );
   }

@@ -77,7 +77,7 @@ export default class SignIn extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F99417',
+    backgroundColor: '#FFFFFF',
   },
   heading: {
     marginTop: height_window / 10,
