@@ -14,9 +14,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
   }
-  async componentDidMount() {
-    console.log('hehe');
-  }
+  async componentDidMount() {}
   render() {
     return (
       <NavigationContainer>

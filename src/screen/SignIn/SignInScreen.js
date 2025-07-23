@@ -8,15 +8,46 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
+import { API_ENDPOINT } from '../../API/API_ENDPOINT';
 import { TextInput } from 'react-native-gesture-handler';
+import saveToken from '../../apiKey/saveApiKey';
+import axios from 'axios';
 const width_window = Dimensions.get('window').width;
 const height_window = Dimensions.get('window').height;
-
 export default class SignIn extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      email: '',
+      password: '',
+    };
   }
-  async componentDidMount() {}
+  async componentDidMount() {
+    // console.log(this.state.email);
+    // console.log(this.state.password);
+    // console.log('SignIn Component Mounted');
+  }
+  async handleSignIn() {
+    console.log(this.state.email);
+    console.log(this.state.password);
+    console.log(API_ENDPOINT + 'user/login/username');
+    console.log('========== LOGIN REQUEST ==========');
+    await axios
+      .post(API_ENDPOINT + 'user/login/username', {
+        username: this.state.email,
+        password: this.state.password,
+      })
+      .then(async res => {
+        console.log(res.data.token);
+        this.props.navigation.navigate('Home', {
+          API_KEY: res.data.token,
+        });
+        await saveToken(res.data.token, res.data.username, this.state.password);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -40,18 +71,20 @@ export default class SignIn extends Component {
                     style={styles.emailInput}
                     placeholder="Email"
                     placeholderTextColor="#000"
+                    onChangeText={text => this.setState({ email: text })}
                   />
                   <TextInput
                     style={styles.passwordInput}
                     placeholder="Password"
                     placeholderTextColor="#000"
                     secureTextEntry={true}
+                    onChangeText={text => this.setState({ password: text })}
                   />
                 </View>
               </View>
               <View style={styles.buttonView}>
                 <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('Home')}
+                  onPress={() => this.handleSignIn()}
                   style={styles.signInbutton}
                 >
                   <Text style={styles.signInText}>Login</Text>

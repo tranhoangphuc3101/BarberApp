@@ -7,15 +7,33 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import { API_ENDPOINT } from '../../API/API_ENDPOINT';
+import axios from 'axios';
 const width_window = Dimensions.get('window').width;
 const height_window = Dimensions.get('window').height;
-
 export default class Home extends Component {
   constructor(props) {
     super(props);
+    const { route } = this.props;
+    const { API_KEY } = route.params;
+    this.state = {
+      API_KEY: API_KEY,
+    };
   }
   async componentDidMount() {
-    console.log({ height_window });
+    console.log(this.state.API_KEY);
+    await axios
+      .get(API_ENDPOINT + 'user/me', {
+        headers: {
+          Authorization: `Bearer ${this.state.API_KEY}`,
+        },
+      })
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
   render() {
     return (
