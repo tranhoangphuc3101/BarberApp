@@ -28,8 +28,8 @@ export default class SignUp extends Component {
     console.log('NIgga');
   }
   async handleSignUp() {
-    this.props.navigation.navigate('Home');
-    this.setState({ isSignUp: true });
+    //this.props.navigation.navigate('Home');
+    await this.setState({ isSignUp: true });
     console.log(this.state.isSignUp);
   }
   render() {
@@ -52,18 +52,25 @@ export default class SignUp extends Component {
             <View>
               <View style={{ marginTop: height_window / 50 }}>
                 <View>
-                  <Text style={styles.nameInput_text}>Name</Text>
+                  <Text style={styles.emailInput_text}>User Name</Text>
                 </View>
-                <Icon
-                  style={styles.searchIcon}
-                  name="user"
-                  size={20}
-                  color="#000"
-                />
-                <TextInput
-                  style={styles.emailInput}
-                  placeholderTextColor="#000"
-                />
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View>
+                    <Icon
+                      style={styles.searchIcon}
+                      name="user"
+                      size={20}
+                      color="#000"
+                    />
+                  </View>
+                  <View>
+                    <TextInput
+                      style={styles.emailInput}
+                      placeholderTextColor="#000"
+                      placeholder="Username"
+                    />
+                  </View>
+                </View>
               </View>
               <View style={{ marginTop: height_window / 50 }}>
                 <View>

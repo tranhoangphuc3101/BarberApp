@@ -22,11 +22,7 @@ export default class SignIn extends Component {
       password: '',
     };
   }
-  async componentDidMount() {
-    // console.log(this.state.email);
-    // console.log(this.state.password);
-    // console.log('SignIn Component Mounted');
-  }
+  async componentDidMount() {}
   async handleSignIn() {
     console.log(this.state.email);
     console.log(this.state.password);
@@ -45,7 +41,7 @@ export default class SignIn extends Component {
         await saveToken(res.data.token, res.data.username, this.state.password);
       })
       .catch(err => {
-        console.error(err);
+        console.error(err.response);
       });
   }
   render() {
