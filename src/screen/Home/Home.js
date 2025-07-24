@@ -21,7 +21,7 @@ export default class Home extends Component {
     };
   }
   async componentDidMount() {
-    console.log(this.state.API_KEY);
+    console.log('APIKEY: ' + this.state.API_KEY);
     await axios
       .get(API_ENDPOINT + 'user/me', {
         headers: {
@@ -32,7 +32,8 @@ export default class Home extends Component {
         console.log(res.data);
       })
       .catch(err => {
-        console.error(err);
+        console.log('APIKEY err: ' + this.state.API_KEY);
+        console.error(err.request);
       });
   }
   render() {
