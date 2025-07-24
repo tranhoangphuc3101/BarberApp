@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 import React, { Component } from 'react';
 import {
   View,
@@ -115,4 +114,3 @@ const styles = StyleSheet.create({
     fontSize: height_window / 30,
   },
 });
->>>>>>> 69acb239192f40d7cac94d4205f351f4bb0daf42
