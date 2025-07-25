@@ -9,6 +9,9 @@ import {
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import IconAntDesign from 'react-native-vector-icons/AntDesign';
+import { CountryPicker } from 'react-native-country-codes-picker';
+import LinearGradient from 'react-native-linear-gradient';
 const width_window = Dimensions.get('window').width;
 const height_window = Dimensions.get('window').height;
 
@@ -22,205 +25,254 @@ export default class SignUp extends Component {
       password: '',
       confirmPassword: '',
       isSignUp: false,
+      showCountryPicker: false,
+      countryCode: '+84',
     };
   }
   async componentDidMount() {
     console.log('NIgga');
   }
   async handleSignUp() {
-    //this.props.navigation.navigate('Home');
+    this.props.navigation.navigate('Auth');
     await this.setState({ isSignUp: true });
     console.log(this.state.isSignUp);
   }
   render() {
     return (
-      <View style={styles.container}>
+      <LinearGradient
+        colors={['#a8edea', '#fed6e3']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.gradientContainer}
+      >
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => this.props.navigation.navigate('SignIn')}
+        >
+          <IconAntDesign name="arrowleft" size={28} color="#363062" />
+        </TouchableOpacity>
         <View style={styles.heading}>
-          <View>
-            <Text style={styles.home_text}>Register Nigga</Text>
-            <View
-              style={{
-                height: height_window / 65,
-              }}
-            />
-            <Text style={styles.home_text_detail}>
-              Please enter your data to complete your account registration
-              process
-            </Text>
-          </View>
-          <View style={styles.input}>
-            <View>
-              <View style={{ marginTop: height_window / 50 }}>
-                <View>
-                  <Text style={styles.emailInput_text}>User Name</Text>
-                </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <View>
-                    <Icon
-                      style={styles.searchIcon}
-                      name="user"
-                      size={20}
-                      color="#000"
-                    />
-                  </View>
-                  <View>
-                    <TextInput
-                      style={styles.emailInput}
-                      placeholderTextColor="#000"
-                      placeholder="Username"
-                    />
-                  </View>
-                </View>
-              </View>
-              <View style={{ marginTop: height_window / 50 }}>
-                <View>
-                  <Text style={styles.emailInput_text}>Email</Text>
-                </View>
-                <TextInput
-                  style={styles.emailInput}
-                  placeholderTextColor="#000"
-                />
-              </View>
-              <View style={{ marginTop: 10 }}>
-                <View>
-                  <Text style={styles.emailInput_text}>Phone Number</Text>
-                </View>
-                <TextInput
-                  style={styles.passwordInput}
-                  placeholderTextColor="#000"
-                />
-              </View>
-              <View style={{ marginTop: 10 }}>
-                <View>
-                  <Text style={styles.passwordInput_text}>Password</Text>
-                </View>
-                <TextInput
-                  style={styles.passwordInput}
-                  placeholderTextColor="#000"
-                  secureTextEntry={true}
-                />
-              </View>
-              <View style={{ marginTop: 10 }}>
-                <View>
-                  <Text style={styles.passwordInput_text}>
-                    Confirm Password
-                  </Text>
-                </View>
-                <TextInput
-                  style={styles.passwordInput}
-                  placeholderTextColor="#000"
-                  secureTextEntry={true}
-                />
-              </View>
+          <Text style={styles.home_text}>Register</Text>
+          <Text style={styles.home_text_detail}>
+            Please enter your data to complete your account registration process
+          </Text>
+        </View>
+        <View style={styles.formCard}>
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>User Name</Text>
+            <View style={styles.inputRow}>
+              <Icon name="user" size={22} style={styles.inputIcon} />
+              <TextInput
+                style={styles.inputField}
+                placeholder="User Name"
+                placeholderTextColor="#363062"
+              />
             </View>
           </View>
-          <View style={styles.buttonView}>
-            <TouchableOpacity
-              onPress={() => this.handleSignUp()}
-              style={styles.signInbutton}
-            >
-              <Text style={styles.signInText}>Sign Up</Text>
-            </TouchableOpacity>
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Email</Text>
+            <View style={styles.inputRow}>
+              <Icon name="envelope" size={22} style={styles.inputIcon} />
+              <TextInput
+                style={styles.inputField}
+                placeholder="User Email"
+                placeholderTextColor="#363062"
+                keyboardType="email-address"
+              />
+            </View>
+          </View>
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Phone Number</Text>
+            <View style={styles.inputRow}>
+              <Icon name="phone" size={22} style={styles.inputIcon} />
+              <TouchableOpacity
+                onPress={() => this.setState({ showCountryPicker: true })}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginRight: 8,
+                }}
+              >
+                <Text style={styles.countryCode}>{this.state.countryCode}</Text>
+                <Icon name="caret-down" size={18} style={styles.inputIcon} />
+              </TouchableOpacity>
+              <TextInput
+                style={[styles.inputField, { flex: 1 }]}
+                placeholder="Phone Number"
+                placeholderTextColor="#363062"
+                keyboardType="phone-pad"
+                value={this.state.phoneNumber}
+                onChangeText={text => this.setState({ phoneNumber: text })}
+              />
+            </View>
+            <CountryPicker
+              show={this.state.showCountryPicker}
+              pickerButtonOnPress={item => {
+                this.setState({
+                  countryCode: item.dial_code,
+                  showCountryPicker: false,
+                });
+              }}
+              onBackdropPress={() =>
+                this.setState({ showCountryPicker: false })
+              }
+              style={{
+                modal: { borderRadius: 24 },
+                countryName: { color: '#363062' },
+                dialCode: { color: '#363062' },
+              }}
+            />
+          </View>
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Password</Text>
+            <View style={styles.inputRow}>
+              <Icon name="lock" size={22} style={styles.inputIcon} />
+              <TextInput
+                style={styles.inputField}
+                placeholder="Password"
+                placeholderTextColor="#363062"
+                secureTextEntry
+                value={this.state.password}
+                onChangeText={text => this.setState({ password: text })}
+              />
+            </View>
+          </View>
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Confirm Password</Text>
+            <View style={styles.inputRow}>
+              <Icon name="lock" size={22} style={styles.inputIcon} />
+              <TextInput
+                style={styles.inputField}
+                placeholder="Confirm Password"
+                placeholderTextColor="#363062"
+                secureTextEntry
+                value={this.state.confirmPassword}
+                onChangeText={text => this.setState({ confirmPassword: text })}
+              />
+            </View>
           </View>
         </View>
-      </View>
+        <View style={styles.buttonView}>
+          <TouchableOpacity
+            onPress={() => this.handleSignUp()}
+            style={styles.signInbutton}
+          >
+            <IconAntDesign name="arrowright" size={22} color="#fff" />
+            <Text style={styles.signInText}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
+      </LinearGradient>
     );
   }
 }
 const styles = StyleSheet.create({
-  container: {
+  gradientContainer: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    justifyContent: 'center',
+    paddingHorizontal: 0,
   },
   heading: {
-    marginTop: height_window / 10,
     alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: 40, // giảm từ 60 xuống 40 cho cao hơn
+    marginBottom: 18,
   },
   home_text: {
-    marginLeft: width_window / 15,
     fontWeight: 'bold',
-    fontSize: height_window / 35,
+    fontSize: 32,
     color: '#363062',
+    marginBottom: 6,
+    letterSpacing: 1,
   },
   home_text_detail: {
-    marginLeft: width_window / 15,
-    fontSize: height_window / 45,
+    fontSize: 16,
     color: '#363062',
+    opacity: 0.7,
+    marginBottom: 0,
+    textAlign: 'center',
+    paddingHorizontal: 32,
   },
-  image: {
-    width: width_window / 2.5,
-    height: height_window / 4.5,
-    resizeMode: 'contain',
-    marginBottom: height_window / 20,
-    alignSelf: 'center',
+  formCard: {
+    backgroundColor: '#fff',
+    borderRadius: 32,
+    padding: 28,
+    marginHorizontal: 18,
+    shadowColor: '#a8edea',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.18,
+    shadowRadius: 16,
+    elevation: 12,
   },
-  input: {
+  formGroup: {
+    marginBottom: 18,
+  },
+  label: {
+    fontSize: 16,
+    color: '#363062',
+    fontWeight: '600',
+    marginBottom: 8,
+    marginLeft: 2,
+  },
+  inputRow: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#f5f6fa',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#a8edea',
+    paddingHorizontal: 12,
+    height: 48,
   },
-  emailInput: {
-    height: height_window / 15,
-    width: width_window / 1.2,
-    backgroundColor: '#fffafa',
-    borderRadius: 10,
-    paddingLeft: 10,
+  inputIcon: {
+    color: '#a8edea',
+    marginRight: 8,
   },
-  passwordInput: {
-    height: height_window / 15,
-    width: width_window / 1.2,
-    backgroundColor: '#fffafa',
-    borderRadius: 10,
-    paddingLeft: 10,
+  countryCode: {
+    fontSize: 16,
+    color: '#363062',
+    marginRight: 8,
+    fontWeight: '500',
+  },
+  inputField: {
+    flex: 1,
+    fontSize: 16,
+    color: '#363062',
+    backgroundColor: 'transparent',
+    paddingVertical: 0,
+    paddingHorizontal: 0,
   },
   buttonView: {
-    marginTop: height_window / 20,
+    marginTop: 32,
     alignItems: 'center',
     justifyContent: 'center',
   },
   signInbutton: {
-    backgroundColor: '#fffafa',
-    height: height_window / 15,
-    width: width_window / 1.2,
-    borderRadius: 10,
+    flexDirection: 'row',
+    backgroundColor: '#363062',
+    height: 56,
+    width: width_window / 1.25,
+    borderRadius: 28,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#363062',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.25,
+    shadowRadius: 16,
+    elevation: 12,
   },
   signInText: {
-    color: '#000',
+    color: '#fff',
     fontWeight: 'bold',
+    fontSize: 20,
+    marginLeft: 10,
+    letterSpacing: 1,
   },
-  signUpText: {
-    color: '#fffafa',
-    fontWeight: 'bold',
-  },
-  signUpButton: {
-    marginTop: height_window / 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  signUpButtonText: {
-    color: '#fffafa',
-    fontWeight: 'bold',
-  },
-  nameInput_text: {
-    fontSize: height_window / 45,
-    color: 'black',
-    paddingLeft: width_window / 35,
-  },
-  emailInput_text: {
-    fontSize: height_window / 45,
-    color: 'black',
-    paddingLeft: width_window / 35,
-  },
-  passwordInput_text: {
-    fontSize: height_window / 45,
-    color: 'black',
-    paddingLeft: width_window / 35,
-  },
-  phoneInput_text: {
-    fontSize: height_window / 45,
-    color: 'black',
-    paddingLeft: width_window / 35,
+  backButton: {
+    position: 'absolute',
+    top: 50,
+    left: 24,
+    zIndex: 10,
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    borderRadius: 20,
+    padding: 6,
   },
 });

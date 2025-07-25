@@ -12,6 +12,7 @@ import { API_ENDPOINT } from '../../API/API_ENDPOINT';
 import { TextInput } from 'react-native-gesture-handler';
 import saveToken from '../../apiKey/saveApiKey';
 import axios from 'axios';
+import Icon from 'react-native-vector-icons/Feather'; // hoặc FontAwesome
 const width_window = Dimensions.get('window').width;
 const height_window = Dimensions.get('window').height;
 export default class SignIn extends Component {
@@ -47,56 +48,78 @@ export default class SignIn extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.heading}>
-          <View>
-            <ImageBackground
-              source={require('../../img/loginTheme.png')}
-              style={styles.image}
-            />
-            <View style={styles.container_login}>
-              <View>
-                <Text style={styles.home_text}>Welcome back 👋</Text>
-                <Text style={styles.about_text}>
-                  Please enter your login information below to access your
-                  account
-                </Text>
-              </View>
-              <View style={styles.input}>
-                <View>
-                  <TextInput
-                    style={styles.emailInput}
-                    placeholder="Email"
-                    placeholderTextColor="#000"
-                    onChangeText={text => this.setState({ email: text })}
-                  />
-                  <TextInput
-                    style={styles.passwordInput}
-                    placeholder="Password"
-                    placeholderTextColor="#000"
-                    secureTextEntry={true}
-                    onChangeText={text => this.setState({ password: text })}
-                  />
-                </View>
-              </View>
-              <View style={styles.buttonView}>
-                <TouchableOpacity
-                  onPress={() => this.handleSignIn()}
-                  style={styles.signInbutton}
-                >
-                  <Text style={styles.signInText}>Login</Text>
-                </TouchableOpacity>
-              </View>
-              <View>
-                <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('SignUp')}
-                  style={styles.signUpButton}
-                >
-                  <Text style={styles.signUpButtonText}>
-                    Don't have an account? Sign Up
-                  </Text>
-                </TouchableOpacity>
-              </View>
+        <View style={styles.topBackground}>
+          <Image
+            source={require('../../img/loginTheme.png')}
+            style={styles.topImage}
+          />
+        </View>
+        <View style={styles.card}>
+          <Text style={styles.home_text}>
+            Welcome back <Text style={styles.wave}>👋</Text>
+          </Text>
+          <Text style={styles.about_text}>
+            Please enter your login information below to access your account
+          </Text>
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Username</Text>
+            <View style={styles.inputRow}>
+              <Icon
+                name="mail"
+                size={20}
+                color="#A1A1AA"
+                style={styles.inputIcon}
+              />
+              <TextInput
+                style={styles.inputField}
+                placeholder="Joesamanta@gmail.com"
+                placeholderTextColor="#A1A1AA"
+                onChangeText={text => this.setState({ email: text })}
+                value={this.state.email}
+              />
             </View>
+          </View>
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Password</Text>
+            <View style={styles.inputRow}>
+              <Icon
+                name="key"
+                size={20}
+                color="#A1A1AA"
+                style={styles.inputIcon}
+              />
+              <TextInput
+                style={styles.inputField}
+                placeholder="Password"
+                placeholderTextColor="#A1A1AA"
+                secureTextEntry={true}
+                onChangeText={text => this.setState({ password: text })}
+                value={this.state.password}
+              />
+              <TouchableOpacity>
+                <Icon name="eye" size={20} color="#A1A1AA" />
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+              style={styles.forgotButton}
+              onPress={() => this.props.navigation.navigate('ForgotPassword')}
+            >
+              <Text style={styles.forgotText}>Forgot password?</Text>
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity
+            onPress={() => this.handleSignIn()}
+            style={styles.signInbutton}
+          >
+            <Text style={styles.signInText}>Login</Text>
+          </TouchableOpacity>
+          <View style={styles.signUpRow}>
+            <Text style={styles.signUpLabel}>Don't have an account? </Text>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('SignUp')}
+            >
+              <Text style={styles.signUpLink}>Register</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -106,86 +129,122 @@ export default class SignIn extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#fff',
   },
-  heading: {
-    marginTop: height_window / 10,
+  topBackground: {
+    backgroundColor: '#FF9800',
+    height: height_window / 2.8,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  topImage: {
+    width: width_window,
+    height: height_window / 2.8,
+    resizeMode: 'cover',
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
+  },
+  card: {
+    position: 'absolute',
+    top: height_window / 4.5,
+    left: 0,
+    right: 0,
+    marginHorizontal: 0,
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    padding: 28,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.12,
+    shadowRadius: 16,
+    elevation: 12,
   },
   home_text: {
     fontWeight: 'bold',
-    fontSize: height_window / 30,
+    fontSize: 28,
     color: '#363062',
-    paddingLeft: width_window / 20,
+    textAlign: 'left',
+    marginBottom: 8,
+  },
+  wave: {
+    fontSize: 28,
   },
   about_text: {
-    fontSize: height_window / 45,
+    fontSize: 16,
     color: '#6B7280',
-    paddingLeft: width_window / 20,
+    marginBottom: 18,
+    textAlign: 'left',
   },
-  image: {
-    alignSelf: 'center',
-    height: height_window / 3,
-    width: width_window / 1.3,
+  inputGroup: {
+    marginBottom: 18,
   },
-  input: {
+  label: {
+    fontSize: 15,
+    color: '#363062',
+    fontWeight: '600',
+    marginBottom: 8,
+  },
+  inputRow: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: height_window / 20,
+    backgroundColor: '#F9FAFB',
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#A1E3F8',
+    paddingHorizontal: 12,
+    height: 48,
   },
-  emailInput: {
-    height: height_window / 15,
-    width: width_window / 1.2,
-    backgroundColor: '#fffafa',
-    borderRadius: 10,
-    paddingLeft: 10,
-    marginBottom: 10,
+  inputIcon: {
+    marginRight: 8,
   },
-  passwordInput: {
-    height: height_window / 15,
-    width: width_window / 1.2,
-    backgroundColor: '#fffafa',
-    borderRadius: 10,
-    paddingLeft: 10,
+  inputField: {
+    flex: 1,
+    fontSize: 16,
+    color: '#363062',
+    backgroundColor: 'transparent',
+    paddingVertical: 0,
+    paddingHorizontal: 0,
   },
-  buttonView: {
-    marginTop: height_window / 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+  forgotButton: {
+    alignSelf: 'flex-end',
+    marginTop: 6,
+  },
+  forgotText: {
+    color: '#363062',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
   signInbutton: {
     backgroundColor: '#363062',
-    height: height_window / 15,
-    width: width_window / 1.2,
-    borderRadius: 10,
+    height: 54,
+    borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 18,
   },
   signInText: {
-    color: '#F9FAFB',
+    color: '#fff',
     fontWeight: 'bold',
+    fontSize: 18,
+    letterSpacing: 1,
   },
-  signUpText: {
-    color: '#fffafa',
-    fontWeight: 'bold',
-  },
-  signUpButton: {
-    marginTop: height_window / 20,
-    alignItems: 'center',
+  signUpRow: {
+    flexDirection: 'row',
     justifyContent: 'center',
+    marginTop: 18,
   },
-  signUpButtonText: {
+  signUpLabel: {
     color: '#6B7280',
-    fontWeight: 'bold',
+    fontSize: 15,
   },
-  container_login: {
-    height: height_window / 1.5,
-    borderTopRightRadius: 25,
-    borderTopLeftRadius: 25,
-    borderColor: '#F9FAFB',
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#F9FAFB',
+  signUpLink: {
+    color: '#363062',
+    fontWeight: 'bold',
+    fontSize: 15,
+    marginLeft: 2,
+    textDecorationLine: 'underline',
   },
 });
