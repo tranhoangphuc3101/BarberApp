@@ -16,7 +16,7 @@ export default class AuthScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: ['', '', '', ''],
+      code: ['', '', '', '', '', ''],
     };
   }
 
@@ -25,7 +25,7 @@ export default class AuthScreen extends Component {
     newCode[idx] = text.replace(/[^0-9]/g, '').slice(0, 1);
     this.setState({ code: newCode }, () => {
       // Nếu nhập số thì chuyển sang ô tiếp theo
-      if (text && idx < 3) {
+      if (text && idx < 5) {
         this['input' + (idx + 1)].focus();
       }
       // Nếu xoá thì lùi về ô trước
@@ -55,7 +55,7 @@ export default class AuthScreen extends Component {
             Please enter the authentication code that we have sent to your email
           </Text>
           <View style={styles.codeRow}>
-            {[0, 1, 2, 3].map(idx => (
+            {[0, 1, 2, 3, 4, 5].map(idx => (
               <TextInput
                 key={idx}
                 ref={ref => (this['input' + idx] = ref)}
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     padding: 6,
   },
   card: {
-    width: '90%',
+    width: '95%',
     backgroundColor: '#fff',
     borderRadius: 28,
     padding: 28,
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   },
   codeRow: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     marginBottom: 28,
   },
   codeInput: {

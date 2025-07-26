@@ -8,9 +8,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import { API_ENDPOINT } from '../../API/API_ENDPOINT';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import { CountryPicker } from 'react-native-country-codes-picker';
+import axios from 'axios';
 import LinearGradient from 'react-native-linear-gradient';
 const width_window = Dimensions.get('window').width;
 const height_window = Dimensions.get('window').height;
@@ -29,13 +31,29 @@ export default class SignUp extends Component {
       countryCode: '+84',
     };
   }
-  async componentDidMount() {
-    console.log('NIgga');
-  }
+  async componentDidMount() {}
   async handleSignUp() {
-    this.props.navigation.navigate('Auth');
-    await this.setState({ isSignUp: true });
-    console.log(this.state.isSignUp);
+    // let phone_modify = await this.state.phoneNumber.substring(1);
+    // await this.setState({ phoneNumber: phone_modify });
+    console.log(this.state.username);
+    console.log(this.state.email);
+    console.log(this.state.phoneNumber);
+    console.log(this.state.password);
+    await axios
+      .post(API_ENDPOINT + 'user/create', {
+        username: this.state.username,
+        display_name: this.state.username,
+        email: this.state.email,
+        password: this.state.password,
+        phone_number: this.state.phoneNumber,
+      })
+      .then(async res => {
+        console.log(res);
+        this.props.navigation.navigate('Auth');
+      })
+      .catch(err => {
+        console.error(err.response);
+      });
   }
   render() {
     return (
@@ -66,6 +84,9 @@ export default class SignUp extends Component {
                 style={styles.inputField}
                 placeholder="User Name"
                 placeholderTextColor="#363062"
+                onChangeText={async username =>
+                  await this.setState({ username })
+                }
               />
             </View>
           </View>
@@ -78,6 +99,7 @@ export default class SignUp extends Component {
                 placeholder="User Email"
                 placeholderTextColor="#363062"
                 keyboardType="email-address"
+                onChangeText={async email => await this.setState({ email })}
               />
             </View>
           </View>
@@ -101,8 +123,11 @@ export default class SignUp extends Component {
                 placeholder="Phone Number"
                 placeholderTextColor="#363062"
                 keyboardType="phone-pad"
-                value={this.state.phoneNumber}
-                onChangeText={text => this.setState({ phoneNumber: text })}
+                onChangeText={async phonenumber =>
+                  await this.setState({
+                    phoneNumber: this.state.countryCode + phonenumber,
+                  })
+                }
               />
             </View>
             <CountryPicker
@@ -112,6 +137,7 @@ export default class SignUp extends Component {
                   countryCode: item.dial_code,
                   showCountryPicker: false,
                 });
+                console.log(item);
               }}
               onBackdropPress={() =>
                 this.setState({ showCountryPicker: false })
@@ -131,9 +157,10 @@ export default class SignUp extends Component {
                 style={styles.inputField}
                 placeholder="Password"
                 placeholderTextColor="#363062"
-                secureTextEntry
-                value={this.state.password}
-                onChangeText={text => this.setState({ password: text })}
+                secureTextEntry={true}
+                onChangeText={async text =>
+                  await this.setState({ password: text })
+                }
               />
             </View>
           </View>
@@ -145,9 +172,7 @@ export default class SignUp extends Component {
                 style={styles.inputField}
                 placeholder="Confirm Password"
                 placeholderTextColor="#363062"
-                secureTextEntry
-                value={this.state.confirmPassword}
-                onChangeText={text => this.setState({ confirmPassword: text })}
+                secureTextEntry={true}
               />
             </View>
           </View>
