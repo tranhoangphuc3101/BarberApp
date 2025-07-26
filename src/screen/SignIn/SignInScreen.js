@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   },
   topBackground: {
     backgroundColor: '#FF9800',
-    height: height_window / 2.8,
+    height: height_window / 1.8, // tăng chiều cao ảnh nền
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
     alignItems: 'center',
@@ -141,14 +141,14 @@ const styles = StyleSheet.create({
   },
   topImage: {
     width: width_window,
-    height: height_window / 2.8,
+    height: height_window / 1.8, // tăng chiều cao ảnh nền
     resizeMode: 'cover',
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
   },
   card: {
     position: 'absolute',
-    top: height_window / 4.5,
+    top: height_window / 2.2, // tăng giá trị này để card xuống thấp hơn
     left: 0,
     right: 0,
     marginHorizontal: 0,
@@ -164,13 +164,13 @@ const styles = StyleSheet.create({
   },
   home_text: {
     fontWeight: 'bold',
-    fontSize: 28,
+    fontSize: 32, // tăng font cho Welcome back dài ra
     color: '#363062',
     textAlign: 'left',
     marginBottom: 8,
   },
   wave: {
-    fontSize: 28,
+    fontSize: 32, // tăng font cho emoji
   },
   about_text: {
     fontSize: 16,
