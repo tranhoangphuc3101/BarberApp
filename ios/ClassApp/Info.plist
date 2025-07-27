@@ -6,6 +6,8 @@
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>Black BarBer</string>
+	<string>Black Barber</string>
+	<string>9507547e3ad8fe505c111bacfa94454095986a6e</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
