@@ -21,25 +21,25 @@ export default class Welcome extends Component {
     super(props);
   }
   async componentDidMount() {
-    await checkTokenValidity('user').then(async (res) => {
-      if (res == false) {
-      Alert.alert(
-          'Login Failed',
-          'Please check your credentials and try again.',
-          [
-            {
-              text: 'OK',
-              onPress: () => this.props.navigation.navigate('SignIn'),
-            },
-          ],
-        );
-      }
-      else {
-        const token = await getToken();
-        console.log("yesking: " + token);
-        this.props.navigation.navigate('Home', {API_KEY: token[0]});
-      }
-    });
+    this.props.navigation.navigate('SignIn');
+    // await checkTokenValidity('user').then(async res => {
+    //   if (res == false) {
+    //     Alert.alert(
+    //       'Login Failed',
+    //       'Please check your credentials and try again.',
+    //       [
+    //         {
+    //           text: 'OK',
+    //           onPress: () => this.props.navigation.navigate('SignIn'),
+    //         },
+    //       ],
+    //     );
+    //   } else {
+    //     const token = await getToken();
+    //     console.log('yesking: ' + token);
+    //     this.props.navigation.navigate('SignIn', { API_KEY: token[0] });
+    //   }
+    // });
   }
 
   render() {
