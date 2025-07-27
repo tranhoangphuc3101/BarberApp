@@ -9,8 +9,6 @@ import Booking from './screen/BookingAppointment/BookingScreen';
 import onBoard_1 from './screen/WelcomeScreen/onBoard_1';
 import onBoard_2 from './screen/WelcomeScreen/onBoard_2';
 import onBoard_3 from './screen/WelcomeScreen/onBoard_3';
-import ForgotPasswordScreen from './screen/Fogotpassword/Forgotpassword_screen';
-import AuthScreen from './screen/Auth/Authscreen';
 const Stack = createStackNavigator();
 export default class App extends Component {
   constructor(props) {
@@ -62,16 +60,6 @@ export default class App extends Component {
           <Stack.Screen
             name="onBoard_3"
             component={onBoard_3}
-            option={{ title: '', gestureEnabled: false }}
-          />
-          <Stack.Screen
-            name="ForgotPassword"
-            component={ForgotPasswordScreen}
-            option={{ title: '', gestureEnabled: false }}
-          />
-          <Stack.Screen
-            name="Auth"
-            component={AuthScreen}
             option={{ title: '', gestureEnabled: false }}
           />
         </Stack.Navigator>

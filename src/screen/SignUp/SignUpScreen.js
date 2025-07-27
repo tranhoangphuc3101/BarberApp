@@ -27,8 +27,6 @@ export default class SignUp extends Component {
       password: '',
       confirmPassword: '',
       isSignUp: false,
-      showCountryPicker: false,
-      countryCode: '+84',
     };
   }
   async componentDidMount() {}
@@ -57,18 +55,7 @@ export default class SignUp extends Component {
   }
   render() {
     return (
-      <LinearGradient
-        colors={['#a8edea', '#fed6e3']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.gradientContainer}
-      >
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => this.props.navigation.navigate('SignIn')}
-        >
-          <IconAntDesign name="arrowleft" size={28} color="#363062" />
-        </TouchableOpacity>
+      <View style={styles.container}>
         <View style={styles.heading}>
           <Text style={styles.home_text}>Register</Text>
           <Text style={styles.home_text_detail}>
@@ -143,11 +130,13 @@ export default class SignUp extends Component {
                 this.setState({ showCountryPicker: false })
               }
               style={{
-                modal: { borderRadius: 24 },
-                countryName: { color: '#363062' },
-                dialCode: { color: '#363062' },
+                height: height_window / 65,
               }}
             />
+            <Text style={styles.home_text_detail}>
+              Please enter your data to complete your account registration
+              process
+            </Text>
           </View>
           <View style={styles.formGroup}>
             <Text style={styles.label}>Password</Text>
@@ -177,127 +166,104 @@ export default class SignUp extends Component {
             </View>
           </View>
         </View>
-        <View style={styles.buttonView}>
-          <TouchableOpacity
-            onPress={() => this.handleSignUp()}
-            style={styles.signInbutton}
-          >
-            <IconAntDesign name="arrowright" size={22} color="#fff" />
-            <Text style={styles.signInText}>Sign Up</Text>
-          </TouchableOpacity>
-        </View>
-      </LinearGradient>
+      </View>
     );
   }
 }
 const styles = StyleSheet.create({
-  gradientContainer: {
+  container: {
     flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 0,
+    backgroundColor: '#FFFFFF',
   },
   heading: {
+    marginTop: height_window / 10,
     alignItems: 'center',
-    marginTop: 40, // giảm từ 60 xuống 40 cho cao hơn
-    marginBottom: 18,
+    justifyContent: 'center',
   },
   home_text: {
+    marginLeft: width_window / 15,
     fontWeight: 'bold',
-    fontSize: 32,
+    fontSize: height_window / 35,
     color: '#363062',
-    marginBottom: 6,
-    letterSpacing: 1,
   },
   home_text_detail: {
-    fontSize: 16,
+    marginLeft: width_window / 15,
+    fontSize: height_window / 45,
     color: '#363062',
-    opacity: 0.7,
-    marginBottom: 0,
-    textAlign: 'center',
-    paddingHorizontal: 32,
   },
-  formCard: {
-    backgroundColor: '#fff',
-    borderRadius: 32,
-    padding: 28,
-    marginHorizontal: 18,
-    shadowColor: '#a8edea',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.18,
-    shadowRadius: 16,
-    elevation: 12,
+  image: {
+    width: width_window / 2.5,
+    height: height_window / 4.5,
+    resizeMode: 'contain',
+    marginBottom: height_window / 20,
+    alignSelf: 'center',
   },
-  formGroup: {
-    marginBottom: 18,
-  },
-  label: {
-    fontSize: 16,
-    color: '#363062',
-    fontWeight: '600',
-    marginBottom: 8,
-    marginLeft: 2,
-  },
-  inputRow: {
-    flexDirection: 'row',
+  input: {
     alignItems: 'center',
-    backgroundColor: '#f5f6fa',
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: '#a8edea',
-    paddingHorizontal: 12,
-    height: 48,
+    justifyContent: 'center',
   },
-  inputIcon: {
-    color: '#a8edea',
-    marginRight: 8,
+  emailInput: {
+    height: height_window / 15,
+    width: width_window / 1.2,
+    backgroundColor: '#fffafa',
+    borderRadius: 10,
+    paddingLeft: 10,
   },
-  countryCode: {
-    fontSize: 16,
-    color: '#363062',
-    marginRight: 8,
-    fontWeight: '500',
-  },
-  inputField: {
-    flex: 1,
-    fontSize: 16,
-    color: '#363062',
-    backgroundColor: 'transparent',
-    paddingVertical: 0,
-    paddingHorizontal: 0,
+  passwordInput: {
+    height: height_window / 15,
+    width: width_window / 1.2,
+    backgroundColor: '#fffafa',
+    borderRadius: 10,
+    paddingLeft: 10,
   },
   buttonView: {
-    marginTop: 32,
+    marginTop: height_window / 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
   signInbutton: {
-    flexDirection: 'row',
-    backgroundColor: '#363062',
-    height: 56,
-    width: width_window / 1.25,
-    borderRadius: 28,
+    backgroundColor: '#fffafa',
+    height: height_window / 15,
+    width: width_window / 1.2,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#363062',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.25,
-    shadowRadius: 16,
-    elevation: 12,
   },
   signInText: {
-    color: '#fff',
+    color: '#000',
     fontWeight: 'bold',
-    fontSize: 20,
-    marginLeft: 10,
-    letterSpacing: 1,
   },
-  backButton: {
-    position: 'absolute',
-    top: 50,
-    left: 24,
-    zIndex: 10,
-    backgroundColor: 'rgba(255,255,255,0.7)',
-    borderRadius: 20,
-    padding: 6,
+  signUpText: {
+    color: '#fffafa',
+    fontWeight: 'bold',
+  },
+  signUpButton: {
+    marginTop: height_window / 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  signUpButtonText: {
+    color: '#fffafa',
+    fontWeight: 'bold',
+  },
+  nameInput_text: {
+    fontSize: height_window / 45,
+    color: 'black',
+    paddingLeft: width_window / 35,
+  },
+  emailInput_text: {
+    fontSize: height_window / 45,
+    color: 'black',
+    paddingLeft: width_window / 35,
+  },
+  passwordInput_text: {
+    fontSize: height_window / 45,
+    color: 'black',
+    paddingLeft: width_window / 35,
+  },
+  phoneInput_text: {
+    fontSize: height_window / 45,
+    color: 'black',
+    paddingLeft: width_window / 35,
   },
 });
