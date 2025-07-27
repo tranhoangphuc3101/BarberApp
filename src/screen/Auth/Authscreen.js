@@ -242,10 +242,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
     letterSpacing: 1,
   },
-  resendText: {
-    color: '#363062',
-    fontSize: 16,
-    textAlign: 'center',
-    marginTop: 12,
-  },
 });
