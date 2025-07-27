@@ -33,27 +33,22 @@ export default class SignUp extends Component {
   }
   async componentDidMount() {}
   async handleSignUp() {
-    // let phone_modify = await this.state.phoneNumber.substring(1);
-    // await this.setState({ phoneNumber: phone_modify });
-    console.log(this.state.username);
-    console.log(this.state.email);
-    console.log(this.state.phoneNumber);
-    console.log(this.state.password);
-    await axios
-      .post(API_ENDPOINT + 'user/create', {
-        username: this.state.username,
-        display_name: this.state.username,
-        email: this.state.email,
-        password: this.state.password,
-        phone_number: this.state.phoneNumber,
-      })
-      .then(async res => {
-        console.log(res);
-        this.props.navigation.navigate('Auth');
-      })
-      .catch(err => {
-        console.error(err.response);
-      });
+    this.props.navigation.navigate('Auth');
+    // await axios
+    //   .post(API_ENDPOINT + 'user/create', {
+    //     username: this.state.username,
+    //     display_name: this.state.username,
+    //     email: this.state.email,
+    //     password: this.state.password,
+    //     phone_number: this.state.phoneNumber,
+    //   })
+    //   .then(async res => {
+    //     console.log(res);
+    //     this.props.navigation.navigate('Auth');
+    //   })
+    //   .catch(err => {
+    //     console.error(err.response);
+    //   });
   }
   render() {
     return (
